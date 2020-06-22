@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/daiiz/svg-spreadsheet#readme",
   "dependencies": {
+    "dom-parser": "^0.1.6",
     "extract-zip": "^2.0.1",
     "glob": "^7.1.6"
   }
