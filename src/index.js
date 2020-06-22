@@ -1,6 +1,8 @@
 const path = require('path')
+const fsPromises = require('fs').promises
 const { unzip } = require('./unzip')
 const { parseSpreadsheetHtml } = require('./html')
+const { createSvgImage } = require('./svg')
 
 const main = async () => {
   await unzip({
@@ -14,7 +16,16 @@ const main = async () => {
     rootClassName: 'grid-container'
   })
 
-  console.log(html)
+  const svg = createSvgImage({
+    htmlStr: html,
+    styleStrs: css,
+    width: 248,
+    height: 192
+  })
+
+  const outPath = 'out/out.svg'
+  await fsPromises.writeFile(outPath, svg, { encoding: 'utf-8' })
+  console.log(outPath)
 }
 
 
