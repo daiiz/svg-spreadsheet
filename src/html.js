@@ -37,7 +37,13 @@ const parseSpreadsheetHtml = async ({ dirPath, fileName, rootClassName }) => {
 
   return {
     html: root.outerHTML,
-    css: resStyles
+    css: [
+      ...resStyles,
+      // 'thead {visibility: collapse;}',
+      'thead th.row-header {width: 0; border-right: 1px; width: 1px;}',
+      'th.row-headers-background > div {width: 0;}',
+      'thead th {height:0 !important; font-size: 0 !important;}', // XXX: 文字を消すべき
+    ]
   }
 }
 

@@ -19,8 +19,8 @@ const main = async () => {
   const svg = createSvgImage({
     htmlStr: html,
     styleStrs: css,
-    width: 248,
-    height: 192
+    width: 248 - 45,
+    height: 192 - 23
   })
 
   const outPath = 'out/out.svg'
