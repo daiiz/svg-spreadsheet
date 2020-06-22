@@ -1,14 +1,14 @@
 const path = require('path')
 const fsPromises = require('fs').promises
 const { unzip } = require('./unzip')
-const { parseSpreadsheetHtml } = require('./html')
+const { parseSpreadsheetHtml, getTableSize } = require('./html')
 const { createSvgImage } = require('./svg')
 
 const main = async () => {
-  // await unzip({
-  //   source: 'raw/raw.zip',
-  //   targetDir: path.resolve('raw/html')
-  // })
+  await unzip({
+    source: 'raw/raw.zip',
+    targetDir: path.resolve('raw/html')
+  })
 
   const { html, css } = await parseSpreadsheetHtml({
     dirPath: 'raw/html',
@@ -16,11 +16,13 @@ const main = async () => {
     rootClassName: 'grid-container'
   })
 
+  const { width, height } = await getTableSize({ html, css })
+
   const svg = createSvgImage({
     htmlStr: html,
     styleStrs: css,
-    width: 500,
-    height: 120
+    width: width + 2,
+    height: height + 2
   })
 
   const outPath = 'out/out.svg'

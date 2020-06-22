@@ -1,44 +1,29 @@
-const DomParser = require('dom-parser')
 const fsPromises = require('fs').promises
+const DomParser = require('dom-parser')
+const puppeteer = require('puppeteer')
+const { getHtmlDocument } = require('./svg')
 
 const parser = new DomParser()
 
 const fileOptions = { encoding: 'utf-8' }
 
-const sum = values => {
-  return values.reduce((a, b) => a + b)
-}
+const getTableSize = async ({ html, css }) => {
+  const htmlStr = getHtmlDocument({ html, css })
 
-const calcTableSize = table => {
-  const thead = table.getElementsByTagName('thead')[0]
-  const thList = thead.getElementsByClassName('column-headers-background')
-
-  const W = []
-  for (const th of thList) {
-    const style = th.getAttribute('style')
-    if (!style) continue
-    const [, width] = style.match(/width:\s*(\d+)px/i)
-    if (!width) continue
-    W.push(parseFloat(width))
-  }
-
-  const tbody = table.getElementsByTagName('tbody')[0]
-  const trList = tbody.getElementsByTagName('tr')
-
-  const H = []
-  for (const tr of trList) {
-    const style = tr.getAttribute('style')
-    if (!style) continue
-    const [, height] = style.match(/height:\s*(\d+)px/i)
-    if (!height) continue
-    H.push(parseFloat(height))
-  }
-
-  const borderW = 1
-  return {
-    width: sum(W) + borderW * (W.length + 1),
-    height: sum(H) + borderW * (H.length + 1)
-  }
+  const browser = await puppeteer.launch()
+  const page = await browser.newPage()
+  await page.setContent(htmlStr)
+  await page.waitFor('table')
+  const size = await page.evaluate((selector, captionStr) => {
+    const table = document.querySelector(selector)
+    // const caption = document.createElement('caption')
+    // caption.innerText = captionStr
+    // table.appendChild(caption)
+    const { width, height } = table.getBoundingClientRect()
+    return { width, height }
+  }, 'table', 'メニュー表')
+  await browser.close()
+  return size
 }
 
 const parseSpreadsheetHtml = async ({ dirPath, fileName, rootClassName }) => {
@@ -67,11 +52,6 @@ const parseSpreadsheetHtml = async ({ dirPath, fileName, rootClassName }) => {
   if (targets.length === 0) throw new Error('Target element is not found.')
   const root = targets[0]
 
-  // 表の大きさを算出する
-  const table = root.getElementsByTagName('table')[0]
-  const { width, height } = calcTableSize(table)
-
-  //:first-child
   return {
     html: root.outerHTML,
     css: [
@@ -81,7 +61,7 @@ const parseSpreadsheetHtml = async ({ dirPath, fileName, rootClassName }) => {
       'th.row-headers-background > div {width: 0;}',
       'thead th {height:0 !important; font-size: 0 !important;}', // XXX: 文字を消すべき
       '.waffle td {padding: 0 3px !important;}',
-      'thead > tr > th:nth-child(2) {width: 1px !important;}', // .column-headers-background:first-child
+      'thead > tr > th:nth-child(2) {width: 1px !important;}',
 
       'tbody > tr {height: 0 !important;}',
       'tbody > tr:first-child th {height: 0 !important;}',
@@ -94,5 +74,6 @@ const parseSpreadsheetHtml = async ({ dirPath, fileName, rootClassName }) => {
 }
 
 module.exports = {
-  parseSpreadsheetHtml
+  parseSpreadsheetHtml,
+  getTableSize
 }
