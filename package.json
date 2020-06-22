@@ -1,0 +1,23 @@
+{
+  "name": "svg-spreadsheet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daiiz/svg-spreadsheet.git"
+  },
+  "author": "Daiki Iizuka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daiiz/svg-spreadsheet/issues"
+  },
+  "homepage": "https://github.com/daiiz/svg-spreadsheet#readme",
+  "dependencies": {
+    "extract-zip": "^2.0.1",
+    "glob": "^7.1.6"
+  }
+}
