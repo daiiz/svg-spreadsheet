@@ -2,9 +2,9 @@
 
 ## Run
 
-```
+```shell
 $ node src/index.js 1WmwoZ0hMDfMvRdbUPHD7NKpz8JJBocy7pfhVWx3sov8 e-san
-#                   ^^^ sheet id                                 ^^^ sheet name
+#                   ^^^ SheetId                                  ^^^ sheetName
 ```
 
 ## Examples
