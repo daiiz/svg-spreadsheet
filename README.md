@@ -1,5 +1,11 @@
 # SVG Spreadsheet
 
+## Run
+
+```
+$ node src/index.js 1WmwoZ0hMDfMvRdbUPHD7NKpz8JJBocy7pfhVWx3sov8 e-san
+#                   ^^^ sheet id                                 ^^^ sheet name
+```
 
 ## Examples
 https://docs.google.com/spreadsheets/d/1WmwoZ0hMDfMvRdbUPHD7NKpz8JJBocy7pfhVWx3sov8/edit?usp=sharing
