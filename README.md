@@ -1,6 +1,6 @@
 # SVG Spreadsheet
 
-A tool to convert tables created in Spreadsheet into SVG images.
+A CLI tool to convert tables created in Spreadsheet into SVG images.
 Render the HTML `<table>` element exported from Spreadsheet in the SVG `<foreignObject>` element.
 This SVG image can be displayed in the `<img>` element, keeping the table's border, background color, and other styles.
 
