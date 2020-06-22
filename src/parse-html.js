@@ -66,7 +66,7 @@ const parseSpreadsheetHtml = async ({ dirPath, fileName, rootClassName }) => {
       'tbody > tr {height: 0 !important;}',
       'tbody > tr:first-child th {height: 0 !important;}',
       'tbody > tr:first-child th div.row-header-wrapper {line-height: 0 !important;}',
-      // borderを消したいとき
+      // 背景のborderを消す
       '.waffle td {border: 0;}',
       '.waffle th {border: solid 1px transparent; background: transparent;}'
     ]
