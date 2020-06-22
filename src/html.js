@@ -5,7 +5,9 @@ const parser = new DomParser()
 
 const fileOptions = { encoding: 'utf-8' }
 
-const parseHtml = async ({ dirPath, fileName }) => {
+// const remove
+
+const parseSpreadsheetHtml = async ({ dirPath, fileName, rootClassName }) => {
   const filePath = `${dirPath}/${fileName}`
   const data = await fsPromises.readFile(filePath, fileOptions)
   const dom = parser.parseFromString(data)
@@ -26,10 +28,19 @@ const parseHtml = async ({ dirPath, fileName }) => {
     resStyles.push(style.innerHTML.trim())
   }
 
+  // Body
+  const targets = dom.getElementsByClassName(rootClassName)
+  if (targets.length === 0) throw new Error('Target element is not found.')
+  const root = targets[0]
+
+  // 不要な要素を削除する
+
+  return {
+    html: root.outerHTML,
+    css: resStyles
+  }
 }
 
 module.exports = {
-  parseHtml
+  parseSpreadsheetHtml
 }
-
-parseHtml({ dirPath: 'raw/html', fileName: 'シート1.html' })
