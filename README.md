@@ -8,7 +8,7 @@ This SVG image can be displayed in the `<img>` element, keeping the table's bord
 
 ```shell
 $ node src/index.js 1WmwoZ0hMDfMvRdbUPHD7NKpz8JJBocy7pfhVWx3sov8 e-san
-#                   ^^^ SheetId                                  ^^^ sheetName
+#                   ^^^ SheetId                                  ^^^ SheetName
 ```
 
 ## Examples
