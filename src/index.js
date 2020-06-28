@@ -3,6 +3,7 @@ const fsPromises = require('fs').promises
 const { unzip } = require('./unzip')
 const { parseSpreadsheetHtml, getTableSize } = require('./parse-html')
 const { downloadSpreadsheet } = require('./fetch-spreadsheet')
+const { captureAsPngImage } = require('./png')
 const { createSvgImage } = require('./svg')
 
 const main = async ({ sheetId, sheetName }) => {
@@ -26,6 +27,9 @@ const main = async ({ sheetId, sheetName }) => {
   })
 
   const { width, height } = await getTableSize({ html, css })
+
+  console.log('#### Create PNG image')
+  await captureAsPngImage('out/out.png', { html, css })
 
   console.log('#### Create SVG image')
   const svg = createSvgImage({

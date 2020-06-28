@@ -14,14 +14,14 @@ const getTableSize = async ({ html, css }) => {
   const page = await browser.newPage()
   await page.setContent(htmlStr)
   await page.waitFor('table')
-  const size = await page.evaluate((selector, captionStr) => {
+  const size = await page.evaluate(selector => {
     const table = document.querySelector(selector)
     // const caption = document.createElement('caption')
     // caption.innerText = captionStr
     // table.appendChild(caption)
     const { width, height } = table.getBoundingClientRect()
     return { width, height }
-  }, 'table', 'メニュー表')
+  }, 'table')
   await browser.close()
   return size
 }
