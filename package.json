@@ -21,6 +21,7 @@
     "dotenv": "^8.2.0",
     "extract-zip": "^2.0.1",
     "glob": "^7.1.6",
+    "png-dpi-reader-writer": "^0.2.4",
     "puppeteer": "^4.0.0"
   }
 }
